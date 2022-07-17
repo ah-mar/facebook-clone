@@ -17,7 +17,7 @@ export default function Home({ session1, posts }) {
   return (
     <div className="h-screen bg-gray-100 overflow-hidden">
       <Head>
-        <title>FB Clone</title>
+        <title>Social Book</title>
       </Head>
 
       {/* Header */}
@@ -33,22 +33,32 @@ export default function Home({ session1, posts }) {
 
 export async function getServerSideProps(context) {
   //Get the user
+
   const session1 = await getSession(context);
+  try {
+    const postsRef = collection(db, "posts");
+    const q = query(postsRef, orderBy("name", "desc"));
+    const posts = await getDocs(q);
+    const docs = posts.docs.map((post) => ({
+      id: post.id,
+      ...post.data(),
+      timestamp: null,
+    }));
+    console.log("session1 is", session1);
 
-  const postsRef = collection(db, "posts");
-  const q = query(postsRef, orderBy("name", "desc"));
-  const posts = await getDocs(q);
-  const docs = posts.docs.map((post) => ({
-    id: post.id,
-    ...post.data(),
-    timestamp: null,
-  }));
-  console.log("session1 is", session1);
-
-  return {
-    props: {
-      session1,
-      posts: docs,
-    },
-  };
+    return {
+      props: {
+        session1,
+        posts: docs,
+      },
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      props: {
+        session1,
+        posts: [],
+      },
+    };
+  }
 }

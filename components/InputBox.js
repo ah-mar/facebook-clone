@@ -39,28 +39,33 @@ function InputBox() {
       timestamp: serverTimestamp(),
     };
     console.log(data);
-    const docref = await addDoc(collection(db, "posts"), data);
-    console.log("Document writted with Docid ->", docref.id);
-    if (imageToPost) {
-      // upload the image
-      const storage = getStorage();
-      const filepath = `posts/${docref.id}`;
-      console.log("filepath is", filepath);
-      const storageRef = ref(storage, `posts/${docref.id}`);
-      console.log("storageref is", storageRef);
-      //
-
-      const snapshot = await uploadString(storageRef, imageToPost, "data_url");
-      console.log("snapshot is", snapshot);
-      removeImage();
-
-      const url = await getDownloadURL(snapshot.ref);
-
-      console.log("File available at", url);
-      const postRef = doc(db, "posts", docref.id);
-      setDoc(postRef, { postImage: url }, { merge: true });
-
-      inputRef.current.value = "";
+    try {
+      const docref = await addDoc(collection(db, "posts"), data);
+      console.log("Document writted with Docid ->", docref.id);
+      if (imageToPost) {
+        // upload the image
+        const storage = getStorage();
+        const filepath = `posts/${docref.id}`;
+        console.log("filepath is", filepath);
+        const storageRef = ref(storage, `posts/${docref.id}`);
+        console.log("storageref is", storageRef);
+        //
+  
+        const snapshot = await uploadString(storageRef, imageToPost, "data_url");
+        console.log("snapshot is", snapshot);
+        removeImage();
+  
+        const url = await getDownloadURL(snapshot.ref);
+  
+        console.log("File available at", url);
+        const postRef = doc(db, "posts", docref.id);
+        setDoc(postRef, { postImage: url }, { merge: true });
+  
+        inputRef.current.value = "";
+      }
+      
+    } catch (error) {
+      console.error(error)
     }
   }
 
