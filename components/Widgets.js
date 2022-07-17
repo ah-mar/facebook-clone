@@ -35,7 +35,7 @@ const contacts = [
 ];
 
 function Widgets() {
-  return <div className=" hidden lg:flex flex-col w-60 p-2 mt-5">
+  return <div className=" hidden lg:flex flex-col w-60 p-2 mt-5 mr-4">
   <div className=" flex justify-between gap-4  text-gray-500 mb-5 min-w-full">
     <h2 className="text-xl">Contacts</h2>
     <div className="flex gap-2">

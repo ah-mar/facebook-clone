@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import { getApp, getApps, initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import firebaseConfig from "./firebaseConfig";
@@ -8,7 +8,8 @@ import firebaseConfig from "./firebaseConfig";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const app = getApps.length > 0 ? getApp() : initializeApp(firebaseConfig);
+
 //const app = !firebase.apps.length ? firebase.initializeApp(firebaseConfig) :firebase.app()
 const db = getFirestore(app);
 const storage = getStorage(app);

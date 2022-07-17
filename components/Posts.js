@@ -6,12 +6,14 @@ import Post from "./Post";
 
 function Posts({ posts }) {
   const [realtimePosts, setRealTimePosts] = useState();
-  const postsRef = collection(db, "posts");
-  const q = query(postsRef, orderBy("timestamp", "desc"));
-  getDocs(q).then((snapshot) => setRealTimePosts(snapshot));
-  //   const [realtimePosts, loading, error] = useCollection(q, {
-  //     snapshotListenOptions: { includeMetadataChanges: true },
-  //   });
+
+ 
+
+  useEffect(() => {
+    const postsRef = collection(db, "posts");
+    const q = query(postsRef, orderBy("timestamp", "desc"));
+    getDocs(q).then((snapshot) => setRealTimePosts(snapshot));
+  }, []);
 
   return (
     <div>

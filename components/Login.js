@@ -5,17 +5,17 @@ import fb_logo from "../public/fb_logo.webp";
 
 function Login() {
   return (
-    <div className="grid place-items-center">
+    <div className="flex flex-col items-center justify-center gap-8 h-screen">
       <Image
         src={fb_logo}
-        height={400}
-        width={400}
+        height={200}
+        width={200}
         objectFit="contain"
         alt="fb-logo"
       />
      
       <button
-        className="p-5 bg-blue-500 rounded-full text-white text-center cursor-pointer"
+        className="px-6 py-4 bg-blue-500 rounded-full text-white text-center cursor-pointer"
         onClick={() => signIn()}
       >
         Login with Facebook
